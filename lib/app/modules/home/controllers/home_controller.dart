@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/services/gemini_service.dart';
+import '../../../data/models/template_model.dart';
+import '../../../data/templates/presentation_templates.dart';
 import '../../../routes/app_pages.dart';
 import 'dart:developer' as dp;
 
@@ -10,6 +12,14 @@ class HomeController extends GetxController {
 
   final isLoading = false.obs;
   final errorMessage = ''.obs;
+
+  // Template selections
+  final Rx<ColorTheme> selectedTheme = PresentationTemplates.defaultTheme.obs;
+  final Rx<LayoutTemplate> selectedLayout =
+      PresentationTemplates.defaultLayout.obs;
+
+  void selectTheme(ColorTheme theme) => selectedTheme.value = theme;
+  void selectLayout(LayoutTemplate layout) => selectedLayout.value = layout;
 
   @override
   void onInit() {
@@ -39,7 +49,8 @@ class HomeController extends GetxController {
     try {
       final infographic = await _geminiService.generateInfographic(
         promptController.text.trim(),
-        // 'variables in cpp',
+        theme: selectedTheme.value,
+        layout: selectedLayout.value,
       );
       //       final infographic = InfographicModel(
       //         htmlCode: '''

@@ -1,8 +1,7 @@
 class UnsplashConfig {
   // TODO: Replace with your actual Unsplash API key
   // Get your API key from: https://unsplash.com/developers
-  static const String accessKey = '-YewkPeK7UbtSxZSVuw_4tETgAgPUi7pWVOICi52Wuo';
-  
+  static const String accessKey = 'Ybvuc1o6E3by3vHw_6KgrhrrPQnQLdsag4SafvSVRWM';
   // Unsplash API settings
   static const String baseUrl = 'https://api.unsplash.com';
   static const String apiVersion = 'v1';
@@ -17,7 +16,7 @@ class UnsplashConfig {
   static const int dailyLimit = 500; // Free tier limit
   
   /// Check if API key is configured
-  static bool get isConfigured => accessKey != 'YOUR_UNSPLASH_ACCESS_KEY_HERE' && accessKey.isNotEmpty;
+  static bool get isConfigured => accessKey != 'Ybvuc1o6E3by3vHw_6KgrhrrPQnQLdsag4SafvSVRWM' && accessKey.isNotEmpty;
   
   /// Get authorization header
   static Map<String, String> get headers => {

@@ -8,10 +8,10 @@ class AIConfig {
       // final model = remoteConfig.remoteConfig.getString('gemini_model');
       // Return the model from Remote Config if it's not empty, otherwise fallback
       // return model.isNotEmpty ? model : 'gemini-1.5-flash';
-      return 'gemini-2.0-flash-lite';
+      return 'gemini-1.5-flash';
     } catch (e) {
       // Fallback to default model if Remote Config fails
-      return 'gemini-2.0-flash-lite';
+      return 'gemini-1.5-flash';
     }
   }
 

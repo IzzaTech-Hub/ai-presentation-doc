@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer' as dp;
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:infography/app/utils/app_strings.dart';
@@ -12,13 +13,16 @@ class RemoteConfigService {
   RemoteConfigService._internal();
 
   final remoteConfig = FirebaseRemoteConfig.instance;
+  StreamSubscription? _configSubscription;
 
   Future<void> initialize() async {
     try {
       await GetRemoteConfig();
       await SetRemoteConfig();
 
-      remoteConfig.onConfigUpdated.listen((event) async {
+      // Cancel any existing subscription before creating a new one
+      await _configSubscription?.cancel();
+      _configSubscription = remoteConfig.onConfigUpdated.listen((event) async {
         print("Remote Updated");
         await remoteConfig.activate();
         await SetRemoteConfig();
@@ -26,7 +30,7 @@ class RemoteConfigService {
     } catch (e) {
       print("Remote Config initialization error: $e");
       // Set default values if remote config fails
-      AppStrings.gemini_model = "gemini-2.0-flash";
+      AppStrings.gemini_model = "gemini-1.5-flash";
     }
   }
 
@@ -40,7 +44,7 @@ class RemoteConfigService {
       );
 
       await remoteConfig.setDefaults(const {
-        "gemini_model": "gemini-2.0-flash",
+        "gemini_model": "gemini-1.5-flash",
       });
       await remoteConfig.fetchAndActivate();
     } on Exception catch (e) {
@@ -55,7 +59,7 @@ class RemoteConfigService {
       dp.log("Gemini model set to: ${AppStrings.gemini_model}");
     } catch (e) {
       print("Error setting remote config: $e");
-      AppStrings.gemini_model = "gemini-2.0-flash"; // fallback
+      AppStrings.gemini_model = "gemini-1.5-flash"; // fallback
     }
   }
 }
